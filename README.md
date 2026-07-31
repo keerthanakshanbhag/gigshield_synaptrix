@@ -57,6 +57,7 @@ graph TD
    ```bash
    cp .env.example .env
 
+## 5. Note On Commit Timestamps
 
-Note on Commit Timestamps:  
- Development was done across a dual-boot setup (Ubuntu / Windows 11). Due to RTC clock synchronization differences between OS reboots, some commit metadata timestamps reflect UTC offsets. All source code was authored during the hackathon timeline.
+### Discrepancy in time sync  
+ Development was done across a dual-boot setup (Ubuntu / Windows 10). Due to RTC clock synchronization differences between OS reboots, some commit metadata timestamps reflect UTC offsets. All source code was authored during the hackathon timeline.
