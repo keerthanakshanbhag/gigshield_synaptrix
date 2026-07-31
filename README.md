@@ -1,14 +1,14 @@
 # GigShield Hackathon Package (`gigshield_worker_companion`)
 
-Welcome to the GigShield Hackathon Project! This repository serves as your starter template and full implementation for **GigShield**, an AI-powered financial coach and safety companion for gig platform workers.
+Welcome to the GigShield Hackathon Project! This repository serves as your starter template and full implementation for "GigShield", an AI-powered financial coach and safety companion for gig platform workers.
 
-Your goal is to aggregate multi-platform earnings, validate fare fairness against benchmark rates, provide accessible AI guidance, detect worker fatigue, and auto-generate complaint drafts or safety alerts when issues arise.
+Our goal is to aggregate multi-platform earnings, validate fare fairness against benchmark rates, provide accessible AI guidance, detect worker fatigue, and auto-generate complaint drafts or safety alerts when issues arise.
 
 ---
 
 ## 1. System Architecture
 
-Below is the component architecture of GigShield. You are responsible for configuring the environment and running the frontend and backend services.
+Below is the component architecture of GigShield.We are responsible for configuring the environment and running the required services.
 
 ```mermaid
 graph TD
@@ -56,3 +56,4 @@ graph TD
 1. Copy the example environment configuration:
    ```bash
    cp .env.example .env
+
