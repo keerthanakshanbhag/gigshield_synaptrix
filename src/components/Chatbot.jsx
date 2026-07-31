@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { askGigShieldBot } from '../utils/llm';
+import { useVoiceInput } from '../utils/useVoiceInput'
 
 export default function Chatbot({ weekSummary }) {
   const [messages, setMessages] = useState([
@@ -7,6 +8,7 @@ export default function Chatbot({ weekSummary }) {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const { listening, startListening } = useVoiceInput((transcript) => setInput(transcript));
 
   async function handleSend() {
     if (!input.trim()) return;
@@ -41,6 +43,9 @@ export default function Chatbot({ weekSummary }) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
         />
+        <button onClick={startListening} style={{ background: listening ? '#dc2626' : '#6b7280' }}>
+  {listening ? '● Listening' : '🎤'}
+        </button>
         <button onClick={handleSend}>Send</button>
       </div>
     </div>

@@ -75,6 +75,27 @@ export async function askGigShieldBot(question, weekSummary = null) {
   }
 }
 
-export async function generateWeeklyInsight(weekSummary = {}) {
-  return `Great effort! You completed ${weekSummary.jobCount ?? 0} jobs earning ₹${weekSummary.totalEarnings ?? 0} total. Keep track of flagged underpaid trips on your dashboard to claim what you deserve.`;
+
+
+
+export async function generateWeeklyInsight(weekSummary) {
+  const prompt = `Summarize this gig worker's week in 2-3 sentences of
+  plain, encouraging language, calling out anything concerning:
+  Total earnings: ₹${weekSummary.totalEarnings}
+  Hours worked: ${weekSummary.totalHours}
+  Jobs logged: ${weekSummary.jobCount}
+  Jobs flagged as underpaid: ${weekSummary.flaggedCount}`;
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+    }
+  );
+
+  if (!response.ok) throw new Error('LLM request failed');
+  const data = await response.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 }

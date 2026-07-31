@@ -2,6 +2,8 @@ import { useState } from 'react';
 import JobForm from './components/JobForm';
 import Dashboard from './components/Dashboard';
 import Chatbot from './components/Chatbot';
+import WeeklyInsight from './components/WeeklyInsight';
+import SafetyButton from './components/SafetyButton';
 import { summarizeWeek } from './utils/fairness';
 
 export default function App() {
@@ -20,7 +22,9 @@ export default function App() {
 
       <JobForm onAddJob={handleAddJob} />
       <Dashboard jobs={jobs} />
+      <WeeklyInsight weekSummary={weekSummary} />
       <Chatbot weekSummary={weekSummary} />
+      <SafetyButton />
     </div>
   );
 }
