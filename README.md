@@ -10,8 +10,15 @@ Your goal is to aggregate multi-platform earnings, validate fare fairness agains
 
 Below is the component architecture of GigShield. You are responsible for configuring the environment and running the frontend and backend services.
 
-![GigShield Architecture Diagram](gigshield_architecture.jpg)
-
+```mermaid
+graph TD
+    A[Gig Worker] -->|Upload Screenshot / Input Job| B[OCR Parser & Job Logger]
+    B --> C[Fairness Checker Engine]
+    C -->|Benchmark Comparison| D[Unified Dashboard]
+    D --> E[LLM Advisor / AI Chatbot]
+    D --> F[Safety & Burnout Detector]
+    E -->|Insights & Complaint Drafts| A
+```
 ### Component Summary Table
 
 | Service / Module Name | Executable / Command | Main File | Description |
