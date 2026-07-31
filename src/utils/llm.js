@@ -1,11 +1,4 @@
-// llm.js — this is the "AI component" of the app: real calls to an
-// LLM API. Swap in whichever provider your team picks (Gemini's free
-// tier is usually fastest to get an API key for during a hackathon).
-//
-// IMPORTANT: never commit your real API key to GitHub. Put it in a
-// .env file (already gitignored) and read it via import.meta.env.
-
-const API_KEY = import.meta.env.VITE_LLM_API_KEY;
+// llm.js — Gemini API Integration for GigShield
 
 const SYSTEM_PROMPT = `You are GigShield's assistant — a plain-language
 rights advisor and financial coach for Indian gig workers (delivery
@@ -15,19 +8,31 @@ with the platform or checking their weekly earnings trend. Keep answers
 short (3-5 sentences) unless asked for detail.`;
 
 /**
- * Sends a user question (plus optional week summary context) to the LLM
- * and returns the text response.
+ * Helper function to safely retrieve the API key at request time
+ */
+function getApiKey() {
+  const key = import.meta.env.VITE_LLM_API_KEY;
+  if (!key || key.trim() === '' || key === 'your_actual_gemini_api_key_here') {
+    throw new Error('Missing VITE_LLM_API_KEY. Please check your .env file and restart your server.');
+  }
+  return key;
+}
+
+/**
+ * Sends a user question (plus optional week summary context) to Gemini API
  */
 export async function askGigShieldBot(question, weekSummary) {
+  const apiKey = getApiKey();
+
   const context = weekSummary
     ? `\n\nContext on this worker's week: total earnings ₹${weekSummary.totalEarnings}, ` +
       `${weekSummary.flaggedCount} of ${weekSummary.jobCount} jobs flagged as possibly underpaid, ` +
       `${weekSummary.totalHours} hours worked.`
     : '';
 
-  // --- Example using Google Gemini's generateContent endpoint ---
+  // Using gemini-1.5-flash which is standard on all Google AI Studio keys
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -41,16 +46,22 @@ export async function askGigShieldBot(question, weekSummary) {
     }
   );
 
-  if (!response.ok) throw new Error('LLM request failed');
+  if (!response.ok) {
+    const errData = await response.json().catch(() => null);
+    console.error('Gemini API Error Response:', errData);
+    throw new Error(`LLM request failed with status ${response.status}`);
+  }
+
   const data = await response.json();
   return data.candidates?.[0]?.content?.parts?.[0]?.text ?? "Sorry, I couldn't generate a response.";
 }
 
 /**
- * Generates the "AI-generated weekly insight" feature — one LLM call
- * that turns the raw weekly numbers into a plain-language summary.
+ * Generates the weekly insight summary
  */
 export async function generateWeeklyInsight(weekSummary) {
+  const apiKey = getApiKey();
+
   const prompt = `Summarize this gig worker's week in 2-3 sentences of
   plain, encouraging language, calling out anything concerning:
   Total earnings: ₹${weekSummary.totalEarnings}
@@ -59,7 +70,7 @@ export async function generateWeeklyInsight(weekSummary) {
   Jobs flagged as underpaid: ${weekSummary.flaggedCount}`;
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -67,7 +78,12 @@ export async function generateWeeklyInsight(weekSummary) {
     }
   );
 
-  if (!response.ok) throw new Error('LLM request failed');
+  if (!response.ok) {
+    const errData = await response.json().catch(() => null);
+    console.error('Gemini API Error Response:', errData);
+    throw new Error(`LLM request failed with status ${response.status}`);
+  }
+
   const data = await response.json();
   return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 }
