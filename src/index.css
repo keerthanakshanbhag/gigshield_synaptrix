@@ -1,65 +1,270 @@
-* { box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+* { 
+  box-sizing: border-box; 
+}
+
+/* 💵 DYNAMIC ANIMATED BACKGROUND WITH AMERICAN DOLLAR ($) THEME 💵 */
+@keyframes bgMove {
+  0% { background-position: 0% 0%, 0% 50%, center; }
+  50% { background-position: 100% 100%, 100% 50%, center; }
+  100% { background-position: 0% 0%, 0% 50%, center; }
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f4f5f7;
-  color: #1a1a1a;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #0c0a14;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.35) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.30) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(12, 10, 20, 0.75) 0%, rgba(15, 12, 28, 0.88) 100%),
+    url('https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&w=1920&q=80');
+
+  background-size: 200% 200%, 200% 200%, cover, cover;
+  animation: bgMove 20s ease-in-out infinite;
+  background-attachment: fixed;
+  color: #f3f4f6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
+
 .app {
   max-width: 900px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 32px 24px;
 }
-h1 { font-size: 1.6rem; margin-bottom: 4px; }
-.subtitle { color: #666; margin-top: 0; margin-bottom: 24px; }
+
+/* 🌟 LIVE ANIMATED GIGSHIELD TITLE 🌟 */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h1 { 
+  font-size: 2.4rem; 
+  font-weight: 800;
+  margin-bottom: 4px; 
+  letter-spacing: -0.03em;
+  background: linear-gradient(-45deg, #a855f7, #ec4899, #3b82f6, #06b6d4, #a855f7);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+  filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.5));
+  display: inline-block;
+}
+
+.subtitle { 
+  color: #d1d5db; 
+  margin-top: 2px; 
+  margin-bottom: 28px; 
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Dark Glassmorphism Cards */
 .card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  background: rgba(18, 14, 28, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
 }
-.card h2 { margin-top: 0; font-size: 1.1rem; }
+
+.card h2 { 
+  margin-top: 0; 
+  font-size: 1.25rem; 
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+/* MESSAGE DISPLAY BOX STYLE */
+.card p,
+.card div:not(.stats):not(.stat-box):not(.form-row),
+textarea,
+input[type="text"],
+.message-box,
+.alert-box,
+.emergency-text {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  font-size: 0.95rem !important;
+  font-family: inherit !important;
+  line-height: 1.5 !important;
+  margin-bottom: 16px !important;
+  box-shadow: none !important;
+}
+
+/* Form Controls & Inputs */
 .form-row {
   display: flex;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
+  align-items: center;
 }
-.form-row input, .form-row select {
+
+.form-row input, 
+.form-row select {
   flex: 1;
   min-width: 120px;
-  padding: 8px 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
   font-size: 0.95rem;
+  font-family: inherit;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
 }
+
+.form-row input::placeholder {
+  color: #8b949e;
+}
+
+.form-row input:focus, 
+.form-row select:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.4);
+}
+
+/* Primary Action Buttons */
 button {
-  background: #7c3aed;
-  color: white;
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  color: #ffffff !important;
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
+  padding: 12px 22px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
 }
-button:hover { background: #6d28d9; }
-table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-.flag { color: #dc2626; font-weight: 600; }
-.ok { color: #16a34a; font-weight: 600; }
-.stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+
+button:hover { 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(168, 85, 247, 0.6);
+}
+
+/* File Upload Button Styling */
+input[type="file"] {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  font-family: inherit !important;
+  font-size: 0.9rem !important;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  cursor: pointer !important;
+  margin-right: 10px !important;
+}
+
+/* Secondary Action Buttons & Labels */
+.card button:not([type="submit"]),
+.card label,
+button.secondary,
+.secondary-btn,
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding: 10px 18px !important;
+  border-radius: 10px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+}
+
+.card button:not([type="submit"]):hover,
+.card label:hover,
+button.secondary:hover,
+.secondary-btn:hover {
+  background: rgba(168, 85, 247, 0.25) !important;
+  border-color: rgba(168, 85, 247, 0.5) !important;
+  color: #ffffff !important;
+}
+
+.card button * {
+  color: #ffffff !important;
+}
+
+/* Tables */
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+th {
+  text-align: left;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #c084fc;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+td { 
+  text-align: left; 
+  padding: 14px 8px; 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+  font-size: 0.9rem; 
+  color: #e5e7eb;
+}
+
+/* Stats Container */
+.stats { 
+  display: flex; 
+  gap: 16px; 
+  flex-wrap: wrap; 
+  margin-bottom: 24px; 
+}
+
 .stat-box {
-  background: white;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
-  padding: 16px 20px;
+  padding: 18px 20px;
   flex: 1;
   min-width: 140px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-.stat-box .value { font-size: 1.4rem; font-weight: 700; }
-.stat-box .label { color: #666; font-size: 0.85rem; }
-.chat-log { max-height: 260px; overflow-y: auto; margin-bottom: 12px; }
-.chat-msg { padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; max-width: 80%; }
-.chat-msg.user { background: #ede9fe; margin-left: auto; }
-.chat-msg.bot { background: #f3f4f6; }
+
+.stat-box .value { 
+  font-size: 1.6rem; 
+  font-weight: 800; 
+  color: #ffffff;
+}
+
+.stat-box .label { 
+  color: #9ca3af; 
+  font-size: 0.85rem; 
+  margin-top: 4px;
+}
