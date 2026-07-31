@@ -9,6 +9,13 @@ export default function Dashboard({ jobs }) {
     expected: j.expectedFare,
   }));
 
+  // Helper function to handle copying the complaint draft
+  const handleDraftComplaint = (job) => {
+    const draftText = `Hello ${job.platform} Support,\n\nI am disputing the payout for my recent job logged on platform ${job.platform}.\n\nDetails:\n- Actual Fare Paid: ₹${job.fare}\n- Benchmark Expected Fare: ₹${job.expectedFare}\n- Underpayment Margin: ${job.deltaPercent}%\n\nBased on distance and time benchmarks, this trip was underpaid. Please review this discrepancy and adjust the payment.\n\nThank you.`;
+    navigator.clipboard.writeText(draftText);
+    alert(`Complaint draft copied to clipboard!\n\n${draftText}`);
+  };
+
   return (
     <div className="card">
       <h2>Dashboard</h2>
@@ -44,7 +51,8 @@ export default function Dashboard({ jobs }) {
 
       <table>
         <thead>
-          <tr><th>Platform</th><th>Fare</th><th>Expected</th><th>Status</th></tr>
+          {/* MODIFICATION 1: Line 38 - Added "Actions" header column */}
+          <tr><th>Platform</th><th>Fare</th><th>Expected</th><th>Status</th><th>Actions</th></tr>
         </thead>
         <tbody>
           {jobs.map((j) => (
@@ -55,10 +63,33 @@ export default function Dashboard({ jobs }) {
               <td className={j.isUnderpaid ? 'flag' : 'ok'}>
                 {j.isUnderpaid ? `Underpaid (${j.deltaPercent}%)` : 'Fair'}
               </td>
+              {/* MODIFICATION 2: Line 48 - Added dynamic Draft Complaint action button */}
+              <td>
+                {j.isUnderpaid ? (
+                  <button 
+                    onClick={() => handleDraftComplaint(j)}
+                    style={{
+                      backgroundColor: '#fee2e2',
+                      color: '#991b1b',
+                      border: 'none',
+                      borderRadius: '4px',
+                      padding: '4px 8px',
+                      fontSize: '11px',
+                      cursor: 'pointer',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    📝 Draft Complaint
+                  </button>
+                ) : (
+                  <span style={{ fontSize: '12px', color: '#888' }}>—</span>
+                )}
+              </td>
             </tr>
           ))}
           {jobs.length === 0 && (
-            <tr><td colSpan={4}>No jobs logged yet.</td></tr>
+            /* MODIFICATION 3: Line 68 - Adjusted colSpan to 5 for empty table state */
+            <tr><td colSpan={5}>No jobs logged yet.</td></tr>
           )}
         </tbody>
       </table>

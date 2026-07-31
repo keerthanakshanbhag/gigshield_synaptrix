@@ -24,7 +24,9 @@ export default function App() {
       <Dashboard jobs={jobs} />
       <WeeklyInsight weekSummary={weekSummary} />
       <Chatbot weekSummary={weekSummary} />
-      <SafetyButton />
+      
+      {/* Updated line below: passing total hours into SafetyButton */}
+      <SafetyButton totalHoursWorked={weekSummary.totalHours} />
     </div>
   );
 }
